@@ -1,0 +1,40 @@
+# CSS and OpenDCIM header code can be built around this for uniformity...worked nicely for me.
+...
+<h1>Remove OpenDCIM User</h1>
+//
+// A VERY simple PHP form that takes user input from web page and removes back-end IDs using htpasswd. Once the backend 
+// user data is removed, the OpenDCIM UI interface can be used to disable a user or overwrite them to a different user.
+//
+// Adding a link to this page in 'usermgr.php' makes it easy to find :)
+//
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+//
+// You'll see there isn't a lot of input sanitation going on here. I was trying to keep it clean, so use with care.
+//
+Enter Username: <input type="text" name="nuser"><br><br>
+<input type="submit" name="submit" value="Delete"><br>
+</form>
+
+<?php
+//
+// I had some trouble variablizing the environment variables directly from _POST. Rather than waste time troubleshooting whatever
+// syntax I was mangling I merely dumped them in a place holder var (d) that I could call cleanly.
+//
+        $d=$_POST["nuser"];
+        putenv("NUSER=$d");
+
+        $before = exec('grep $NUSER .htpasswd');
+        exec('sed -i s/$NUSER//g .htpasswd');
+        $after = exec('grep $NUSER .htpasswd');
+        echo "<br>Entry before change: ",$before;
+        echo "<br>Entry after change: ",$after;
+        $before = "";
+        $after = "";
+        $d="";
+?>
+<br><br>
+//
+// Button returns you to previous user UI page. 
+//
+<a href="https://opendcim-server.local/usermgr.php"><button>Return to User Page</button></a>
+</div></div>
