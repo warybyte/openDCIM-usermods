@@ -8,7 +8,7 @@
 //
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 //
-// You'll see there isn't a lot of input sanitation going on here. I was trying to keep it clean, so use with care.
+// Note: You'll see there isn't a lot of input sanitation going on here. I was trying to keep it clean, so use with care.
 //
 Enter New Username: <input type="text" name="nuser"><br>
 Enter New Password: <input type="text" name="npass"><br><br>
